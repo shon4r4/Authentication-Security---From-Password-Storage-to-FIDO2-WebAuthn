@@ -75,22 +75,22 @@ WebAuthn Result: 0% success rate; assertions were rejected due to origin binding
 
 ## Project Structure
 
-* '/app'                  # Source code for the Flask API
-* '/artifacts'            # Database exports and QR enrollment samples
-* '/cracking'             # Dictionary & Brute-force simulation scripts
-* '/timing_attack'        # Timing leakage benchmarking tools
-* '/relay*                # MITM local proxy and relay experiments
-* '/testing'              # Request-based functional test scripts
+* `/app`                  # Source code for the Flask API
+* `/artifacts`            # Database exports and QR enrollment samples
+* `/cracking`             # Dictionary & Brute-force simulation scripts
+* `/timing_attack`        # Timing leakage benchmarking tools
+* `/relay`                # MITM local proxy and relay experiments
+* `/testing`              # Request-based functional test scripts
 
 
 ---
 
 ## Installation & Setup
 
-    Clone the Repo: git clone https://github.com/shon4r4/Authentication-Security---From-Password-Storage-to-FIDO2-WebAuthn.git
+    Clone the Repo: git clone `https://github.com/shon4r4/Authentication-Security---From-Password-Storage-to-FIDO2-WebAuthn.git`
 
-    Dependencies: pip install flask flask-sqlalchemy fido2 argon2-cffi bcrypt pyotp qrcode
+    Dependencies: `pip install flask flask-sqlalchemy fido2 argon2-cffi bcrypt pyotp qrcode`
 
-    Run: python app.py
+    Run: `python app.py`
 
     Access: Open http://localhost:5000 to view the research frontend.
