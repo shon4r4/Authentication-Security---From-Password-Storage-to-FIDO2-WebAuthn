@@ -10,6 +10,10 @@
 A full-stack demonstration of secure credential management, FIDO2/WebAuthn, and cryptographic vulnerability research.
 Beyond implementation, this project includes a Security Research Suite with tools to simulate and mitigate timing attacks, MITM relays, and brute-force cracking.
 
+[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/)
+[![Flask](https://img.shields.io/badge/Framework-Flask-lightgrey.svg)](https://flask.palletsprojects.com/)
+[![Security](https://img.shields.io/badge/Security-FIDO2%20%2F%20WebAuthn-green.svg)](https://fidoalliance.org/)
+
 ---
 
 ## Key Features
@@ -71,12 +75,12 @@ WebAuthn Result: 0% success rate; assertions were rejected due to origin binding
 
 ## Project Structure
 
-├── /app                  # Source code for the Flask API
-├── /artifacts            # Database exports and QR enrollment samples
-├── /cracking             # Dictionary & Brute-force simulation scripts
-├── /timing_attack        # Timing leakage benchmarking tools
-├── /relay                # MITM local proxy and relay experiments
-└── /testing              # Request-based functional test scripts
+* '/app'                  # Source code for the Flask API
+* '/artifacts'            # Database exports and QR enrollment samples
+* '/cracking'             # Dictionary & Brute-force simulation scripts
+* '/timing_attack'        # Timing leakage benchmarking tools
+* '/relay*                # MITM local proxy and relay experiments
+* '/testing'              # Request-based functional test scripts
 
 
 ---
