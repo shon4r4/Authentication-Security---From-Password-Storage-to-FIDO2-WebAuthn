@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>D7076 Lab 3</title>
+</head>
+<body>
+  <label>Username: <input id="username" value="alice" /></label><br>
+  <label>Password: <input id="password" value="secret123" type="password" /></label><br>
+  <label>MFA Code (TOTP/HOTP): <input id="mfa_code" /></label><br>
+  <pre id="output"></pre>
+
+  <button id="registerBtn">Register</button><br>
+  <button id="loginBtn">Login</button><br>
+  <button id="totpSetupBtn">Setup TOTP</button><br>
+  <button id="hotpSetupBtn">Setup HOTP</button><br>
+  <button id="mfaVerifyBtn">Verify MFA</button><br>
+  <button id="webauthnRegisterBtn">WebAuthn Register</button><br>
+  <button id="webauthnLoginBtn">WebAuthn Login</button><br>
+
+  <script>
+    const $ = id => document.getElementById(id);
+    const log = msg => $("output").textContent += msg + "\n";
+
+    const ab2b64u = buf => btoa(String.fromCharCode(...new Uint8Array(buf)))
+      .replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
+    const b64u2ab = str => {
+      const b64 = str.replace(/-/g, "+").replace(/_/g, "/") + "===".slice((str.length + 3) % 4);
+      const bin = atob(b64);
+      return Uint8Array.from(bin, c => c.charCodeAt(0)).buffer;
+    };
+
+    async function requestJSON(url, data) {
+      const res = await fetch(url, { method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(data) });
+      const json = await res.json();
+      log(url + " → " + JSON.stringify(json, null, 2));
+      return json;
+    }
+
+    // Endpoints
+    $("registerBtn").onclick = () => requestJSON("/register", { username: $("username").value, password: $("password").value });
+    $("loginBtn").onclick = () => requestJSON("/login", { username: $("username").value, password: $("password").value });
+    $("totpSetupBtn").onclick = () => requestJSON("/mfa/setup", { username: $("username").value });
+    $("hotpSetupBtn").onclick = () => requestJSON("/mfa/setup/hotp", { username: $("username").value });
+    $("mfaVerifyBtn").onclick = () => requestJSON("/mfa/verify", { username: $("username").value, code: $("mfa_code").value });
+
+    // WebAuthn
+    $("webauthnRegisterBtn").onclick = async () => {
+      const username = $("username").value;
+      const begin = await requestJSON("/webauthn/register/begin", { username });
+      const pub = begin.publicKey;
+      pub.challenge = b64u2ab(pub.challenge);
+      pub.user.id = b64u2ab(pub.user.id);
+
+      const cred = await navigator.credentials.create({ publicKey: pub });
+      const attestation = {
+        rawId: ab2b64u(cred.rawId),
+        response: {
+          clientDataJSON: ab2b64u(cred.response.clientDataJSON),
+          attestationObject: ab2b64u(cred.response.attestationObject)
+        }
+      };
+      await requestJSON("/webauthn/register/complete", { username, attestation });
+    };
+
+    $("webauthnLoginBtn").onclick = async () => {
+      const username = $("username").value;
+      const begin = await requestJSON("/webauthn/login/begin", { username });
+      const pub = begin.publicKey;
+      pub.challenge = b64u2ab(pub.challenge);
+      if (pub.allowCredentials) {
+        pub.allowCredentials = pub.allowCredentials.map(c => ({ id: b64u2ab(c.id), type: c.type, transports: c.transports || [] }));
+      }
+
+      const assertion = await navigator.credentials.get({ publicKey: pub });
+      const authData = {
+        rawId: ab2b64u(assertion.rawId),
+        response: {
+          clientDataJSON: ab2b64u(assertion.response.clientDataJSON),
+          authenticatorData: ab2b64u(assertion.response.authenticatorData),
+          signature: ab2b64u(assertion.response.signature),
+          userHandle: assertion.response.userHandle ? ab2b64u(assertion.response.userHandle) : null
+        }
+      };
+      await requestJSON("/webauthn/login/complete", { username, authData });
+    };
+  </script>
+</body>
+</html>
