@@ -1,0 +1,12 @@
+id,username,salt,pwd_hash,alg,mfa_meta
+1,alice,,a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3,sha256,"{""enabled"": false}"
+2,bob,,a03ab19b866fc585b5cb1812a2f63ca861e7e7643ee5d43fd7106b623725fd67,sha3,"{""enabled"": false}"
+3,carol,,$2b$12$3GtItRJj.t2tqDPIHuZGDOO0GKFEZNYRv3XNYS/8ZGL0xOc/eOpmu,bcrypt,"{""enabled"": false}"
+4,dave,,"$argon2id$v=19$m=65536,t=3,p=4$Pogx5wnpsjlA2JRVrqcCOw$imvqE0za6V7fsIRP3qvUFyNdzHQXK02KLcZg5UFosRk",argon2,"{""enabled"": false}"
+5,harry,,a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3,sha256,"{""enabled"": false}"
+6,potter,,"$argon2id$v=19$m=65536,t=3,p=4$fben1mS0T7wMjaxD7oTweg$H2qmOMJHhnA3mdkmzw6Oeq+w5+yhG4vEmWwmvvEduR0",argon2,"{""enabled"": false}"
+7,ron,,$2b$12$webMsl/GkNPYpQ1kJv..MeA.uP0LxxZTQX9LhpqZ4lZuFcNv5nEQy,bcrypt,"{""enabled"": false}"
+8,hermione,,a03ab19b866fc585b5cb1812a2f63ca861e7e7643ee5d43fd7106b623725fd67,sha3,"{""enabled"": false}"
+9,pam,RHIMSMHgQZrS0+qzhZOCKA==,063MhIf2U43QMjq4h/t0Edn6oOjzmAlp72S3C6NFPpY=,sha256,"{""enabled"": false}"
+12,jim,44p8z82/7w1VxiCSXKC+XQ==,D6bZGtkjI09+mFpybPih9sSUi/0tkbA3Lpuc8EVutEQ=,sha3,"{""enabled"": false}"
+13,mac,b31jTEisgVgRrcF1wgtnCw==,QRZT32kA4TOeCdj79ruTB5eqNCvdDahoQtb5sFcDamU=,sha3,"{""enabled"": false}"

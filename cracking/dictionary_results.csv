@@ -1,0 +1,12 @@
+username,found_password,time_seconds
+alice,123,0.0000
+bob,123,0.0000
+carol,123,0.7240
+dave,123,0.1857
+harry,123,0.0000
+potter,123,0.1658
+ron,123,0.7229
+hermione,123,0.0000
+pam,,0.0000
+jim,,0.0000
+mac,,0.0000
